@@ -1,0 +1,53 @@
+﻿@using ECommerce.Models;
+@using ECommerce.Models.ViewModels;
+@model ECommerce.Models.ViewModels.DashboardView
+<h3> This is Dashboard </h3>
+<form class= method="get" asp-controller="Product" asp-action="ProductShowcase">
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="">
+                <input type="text" placeholder="Search" name="prodsearchkeyword">
+                <input type="submit" value="Search"> 
+            </div>
+        </div>
+        <div class="col-sm-10">
+            <div class="row">
+                @foreach(Product product in @Model.productlist)
+                {
+                    <div class="col-md-2">
+                        <div class="thumbnail">
+                            <img src="@product.imageurl" alt="Lights" style="width:80px; height:80px">
+                            <div class="caption">
+                                <p>@product.name</p>
+                                <p>@product.description</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <a asp-controller="Product" asp-action="ProductShowcase">show more</a>
+            </div>
+            @if (@Model.orderlist.Count>0)
+            {
+                <p3>Recent Orders</p3>
+                <ul>
+                    @foreach(Order order in @Model.orderlist)
+                    {
+                        <li> @order.customer?.name purchased @order.item_count @order.product?.name at @order.created_at</li>
+                    }
+                    <a asp-controller="Order" asp-action="OrderShowcase">show all orders</a>
+                </ul>
+            }
+            @if (@Model.customerlist.Count>0)
+            {
+                <p3>New Customers</p3>
+                <ul>
+                    @foreach(Customer customer in @Model.customerlist)
+                    {
+                        <li> @customer.name joined store @customer.DaysWithShop days ago</li>
+                    }
+                    <a asp-controller="Customer" asp-action="CustomerShowcase">show all customers</a>
+                </ul>
+            }
+        </div>
+    </div>
+</form>

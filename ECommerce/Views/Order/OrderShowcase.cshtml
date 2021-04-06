@@ -1,0 +1,53 @@
+@model ECommerce.Models.ViewModels.OrdersView
+<h3> This is Orders Showcase </h3>
+<h4><b>Add a new order</b></h4>
+<form method="post" asp-controller="Order" asp-action="AddOrder">
+    <div class="">
+        <label>Customer:</label>
+        <select asp-for="@Model.order.customer_id">
+            @foreach(Customer customer in @Model.customerlist)
+            {
+                <option value="@customer.customer_id">@customer.name</option>
+            }
+        </select>
+    <br>
+        <label>Order Amt:</label>
+        <input asp-for="@Model.order.item_count">
+    <br>
+        <label>Item:</label>
+        <select asp-for="@Model.order.product_id">
+            @foreach(Product product in @Model.productlist)
+            {
+                <option value="@product.product_id">@product.name</option>
+            }
+        </select>
+    <br>
+        <input type="submit" value="Order"> 
+    </div>
+</form>
+    <br>
+    <hr>
+    <input type="search" placeholder="Filter" name="filterorderkey">
+    <div class="container">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Order Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(Order order in @Model.orderlist)
+                        {
+                            <tr>
+                                <td>@order.customer.name</td>
+                                <td>@order.product.name</td>
+                                <td>@order.item_count</td>
+                                <td>@order.created_at.ToString("d")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+    </div>

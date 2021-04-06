@@ -1,0 +1,38 @@
+@model ECommerce.Models.ViewModels.CustomersView
+
+<h3> This is Customers Showcase </h3>
+<h4><b>Add a new customer</b></h4>
+    <form method="post" asp-controller="Customer" asp-action="AddCustomer">
+        <div class="form-group">
+            <span asp-validation-for="@Model.customer.name"></span>
+            <label asp-for="@Model.customer.name"></label>
+            <input class="form-control" asp-for="@Model.customer.name">
+        </div>
+        <input type="submit" value="Create">
+    </form>
+    <br>
+    <hr>
+    <input type="text" placeholder="Search" name="customernamesearchkey">
+    <div class="container">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>Created Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(Customer customer in @Model.customerlist)
+                        {
+                            <tr>
+                                <td>@customer.name</td>
+                                <td>@customer.created_at</td>
+                                <td><form asp-controller="Customer" asp-action="RemoveCustomer" method="post">
+                                    <button type="submit" value="@customer.customer_id" name = "id">Remove</button>
+                                </form></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+    </div>
